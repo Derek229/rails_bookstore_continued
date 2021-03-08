@@ -1,21 +1,43 @@
 import axios from 'axios';
-import React from 'react'
+import React, {useState} from 'react'
+import BookForm from './BookForm';
 const Book = (props) => {
-  const {title, author, id, deleteBook} = props;
 
+  const {title, author, id, deleteBook} = props;
+  
+ 
+  const [showForm, setShowForm] = useState(false)
   const deleteHandler = async (id) => {
     let res = await axios.delete(`/books/${id}`)
     deleteBook(res.data.id)
   }
+  const  renderBook = () => {
   return (
+    <>
     <div>
       <h1> 
         {id}- {title}
-        <span onClick={() => deleteHandler(id)}>delete</span>
+   
       </h1>
-      <p> author: {author}</p>
+      <h2> author: {author}</h2>
     </div>
-
+    <div>
+      <p>
+    <span onClick={() => deleteHandler(id)}>delete</span>
+    <p onClick={() =>setShowForm(true)}>edit</p>
+    </p>
+    </div>
+    </>
   )
 }
+
+return (
+<div>
+  {!showForm && renderBook()}
+  {showForm && <BookForm setShowForm={setShowForm} title={title} author={author}/>}
+ 
+</div>
+)
+}
+
 export default Book;

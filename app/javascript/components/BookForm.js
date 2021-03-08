@@ -6,7 +6,7 @@ const BookForm = (props) => {
 const [title, setTitle] = useState('')
 const [author, setAuthor] = useState('')
 
- const { addBook } = props
+ const { addBook, setShowForm, title, author} = props
   
 
 const handleSubmit = async (e) => {
@@ -18,6 +18,7 @@ const handleSubmit = async (e) => {
     setAuthor('')
   }
 
+
   return (
     <form className= "book-form" onSubmit={handleSubmit}>
       <p>title </p>
@@ -25,6 +26,7 @@ const handleSubmit = async (e) => {
       <p>author</p>
      <input value={author} onChange={(e) => setAuthor(e.target.value)}/>
     < button type='submit'>add</button>
+    {setShowForm && <div onClick={()=> setShowForm(false)}>cancel</div>}
     </form>
   )
 }
